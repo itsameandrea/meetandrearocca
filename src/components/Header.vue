@@ -16,7 +16,10 @@
         </div><!-- .site-branding -->
         <nav id="main-navigation" class="site-navigation" aria-label="Main Navigation">
           <div class="site-nav-inside">
-            <button id="menu-close" class="menu-toggle"><span class="screen-reader-text">Open Menu</span><span class="icon-close" aria-hidden="true"></span></button>
+            <button @click="onToggleMobileMenu" id="menu-close" class="menu-toggle">
+              <span class="screen-reader-text">Open Menu</span>
+              <span class="icon-close" aria-hidden="true"></span>
+            </button>
             <ul class="menu">
               <li
                 v-for="(link, index) in links"
@@ -28,7 +31,12 @@
             </ul><!-- .menu -->
           </div>
         </nav><!-- .site-navigation -->
-        <button id="menu-open" class="menu-toggle"><span class="screen-reader-text">Close Menu</span><span class="icon-menu" aria-hidden="true"></span></button>
+        <button id="menu-open" class="menu-toggle" @click="onToggleMobileMenu">
+          <span class="screen-reader-text">
+            Close Menu
+          </span>
+          <span class="icon-menu" aria-hidden="true" />
+        </button>
       </div><!-- .site-header-inside -->
     </div><!-- .inner -->
   </header><!-- .site-header -->
@@ -46,6 +54,11 @@ export default {
         { label: 'Projects', url: '/projects'},
         { label: 'Blog', url: '/blog'}
       ]
+    }
+  },
+  methods: {
+    onToggleMobileMenu() {
+      document.body.classList.toggle('menu--opened')
     }
   }
 }
