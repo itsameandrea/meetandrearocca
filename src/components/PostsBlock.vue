@@ -15,18 +15,18 @@
               :key="index"
               class="post"
             >
-              <a class="post-thumbnail" :href="post.slug">
+              <g-link class="post-thumbnail" :to="post.path">
                 <img
                   class="thumbnail"
                   :src="post.image"
                   :alt="post.title"
                 />
-              </a>
+              </g-link>
               <header class="post-header">
                 <h3 class="post-title">
-                  <a :href="post.slug" rel="bookmark">
+                  <g-link :href="post.path" rel="bookmark">
                     {{ post.title }}
-                  </a>
+                  </g-link>
                 </h3>
                 <div class="post-meta">
                   <time class="published" datetime="post.createdAt">

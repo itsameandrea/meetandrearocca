@@ -23,7 +23,7 @@
                 :key="index"
                 class="menu-item"
                 :class="{ 'current-menu-item': link.url === $route.path  }">
-                <a :href="link.url">{{ link.label }}</a>
+                <g-link :to="link.url">{{ link.label }}</g-link>
               </li>
             </ul><!-- .menu -->
           </div>
@@ -42,7 +42,7 @@ export default {
       logo,
       links: [
         { label: 'Home', url: '/' },
-        { label: 'About', url: '/about'},
+        { label: 'About', url: '/about-me'},
         { label: 'Projects', url: '/projects'},
         { label: 'Blog', url: '/blog'}
       ]

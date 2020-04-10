@@ -1,16 +1,76 @@
-// Server API makes it possible to hook into various parts of Gridsome
-// on server-side and add custom data to the GraphQL data layer.
-// Learn more: https://gridsome.org/docs/server-api/
+const Prismic = require("prismic-javascript");
+const DOM = require("prismic-dom");
+const marked = require('marked')
 
-// Changes here require a server restart.
-// To restart press CTRL + C in terminal and run `gridsome develop`
+const apiEndpoint = "https://meetandrearocca.cdn.prismic.io/api/v2";
+const apiToken = process.env.PRISMIC_TOKEN;
 
 module.exports = function (api) {
-  api.loadSource(({ addCollection }) => {
-    // Use the Data Store API here: https://gridsome.org/docs/data-store-api/
-  })
+  api.loadSource(async ({ addCollection }) => {
+    const posts = addCollection({ typeName: 'Post' })
+    const projects = addCollection({ typeName: "Project" })
+    const pages = addCollection({ typeName: 'StaticPage' })
 
-  api.createPages(({ createPage }) => {
-    // Use the Pages API here: https://gridsome.org/docs/pages-api/
+    const api = await Prismic.getApi(apiEndpoint, {
+      accessToken: apiToken,
+    });
+
+    const { results } = await api.query("", {
+      fetchLinks: ["author.name", "author.avatar"],
+    });
+
+    results.forEach(
+      ({
+        type,
+        data,
+        slugs,
+        tags,
+        first_publication_date,
+        last_publication_date,
+      }) => {
+        if (type === "project") {
+          projects.addNode({
+            path: `/projects/${slugs[0]}`,
+            slug: slugs[0],
+            client: {
+              name: DOM.RichText.asText(data.client_name),
+              logo: data.client_logo.url,
+            },
+            image: data.image.url,
+            technologies: DOM.RichText.asText(
+              data.project_technologies
+            ).split(","),
+            description: marked(DOM.RichText.asText(data.project_description)),
+          });
+        } else if (type === "post") {
+          const { author } = data;
+
+          console.log(data)
+
+          posts.addNode({
+            path: `/blog/${slugs[0]}`,
+            slug: slugs[0],
+            tags,
+            author: {
+              name: author.data.name[0].text,
+              avatar: author.data.avatar.url,
+            },
+            createdAt: first_publication_date,
+            updatedAt: last_publication_date,
+            image: data.image.url,
+            title: DOM.RichText.asText(data.title),
+            excerpt: DOM.RichText.asText(data.excerpt),
+            content: marked(DOM.RichText.asText(data.content))
+          });
+        } else if (type === "static_page") {
+          pages.addNode({
+            path: `/${slugs[0]}`,
+            slug: slugs[0],
+            title: DOM.RichText.asText(data.title),
+            content: marked(DOM.RichText.asText(data.content))
+          });
+        }
+      }
+    );
   })
 }

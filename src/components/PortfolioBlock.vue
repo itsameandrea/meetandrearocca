@@ -10,27 +10,17 @@
       <div class="block-content">
         <div class="portfolio-feed layout-mosaic">
           <article v-for="(project, index) in projects" :key="index" class="post project">
-            <!-- <a
-              v-if="index === projects.length -1"
-              :href="`/projects/${project.slug}`"
-              class="post-link"
-            >
-              <div class="post-thumbnail">
-                <img class="thumbnail" :src="project.image" :alt="project.title" />
-              </div>
-              <span class="view-all">{{ include_dict.section.view_all_text | default("View All", true) }}</span>
-            </a> -->
-            <a
-              :href="`/projects/${project.slug}`"
+            <g-link
+              :to="project.path"
               class="post-link"
             >
               <div class="post-thumbnail">
                 <img class="thumbnail" :src="project.image" :alt="project.name" />
               </div>
               <header class="post-header">
-                <h3 class="post-title">{{ project.name }}</h3>
+                <h3 class="post-title">{{ project.client.name }}</h3>
               </header>
-            </a><!-- .post-link -->
+            </g-link><!-- .post-link -->
           </article><!-- .post -->
         </div><!-- .portfolio-feed -->
       </div><!-- .block-content -->

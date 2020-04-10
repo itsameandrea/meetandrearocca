@@ -37,18 +37,6 @@ export default {
   },
   data() {
     return {
-      projects: [
-        {
-          name: 'Lacerba',
-          slug: 'lacerba',
-          image: 'https://themes.stackbit.com/demos/exto/images/1_thumb.jpg'
-        },
-        {
-          name: 'Faraday',
-          slug: 'faraday',
-          image: 'https://themes.stackbit.com/demos/exto/images/2_thumb.jpg'
-        }
-      ],
       services: [
         {
           title: 'Rapid MVP prototyping',
@@ -58,16 +46,53 @@ export default {
           title: 'Full-stack Web Development',
           content: `I can help you build, improve and add functionalities to your Javascript or Rails app. I have many years of experience working with Rails, Vue and Nodejs.`
         }
-      ],
-      posts: [
-        {
-          title: 'Guide to action cable',
-          excerpt: 'Actioncable is hard, I make it easy',
-          image: 'https://themes.stackbit.com/demos/exto/images/1_thumb.jpg',
-          createdAt: new Date()
-        }
       ]
+    }
+  },
+  computed: {
+    projects() {
+      return this.$page.projects.edges.map(e => e.node)
+    },
+    posts() {
+      return this.$page.posts.edges.map(e => e.node)
     }
   }
 }
 </script>
+<page-query>
+  query Project {
+    projects: allProject(sortBy: "createdAt", order: ASC limit: 4) {
+      edges {
+        node {
+          technologies
+          image
+          path
+          slug
+          description
+          client {
+            name
+            logo
+          }
+        }
+      }
+    }
+    posts: allPost(sortBy: "createdAt", order: ASC limit: 4) {
+      edges {
+        node {
+          path
+          slug
+          author {
+            name
+            avatar
+          }
+          createdAt
+          updatedAt
+          image
+          title
+          excerpt
+          content
+        }
+      }
+    }
+  }
+</page-query>

@@ -6,7 +6,15 @@
   margin-bottom: 3.33333em;
 }
 
+.post-header-image {
+  height: 500px;
+  width: 100%;
+  background-size: cover;
+  background-position: center;
+}
+
 .post-header {
+  margin-top: 1em;
   margin-bottom: 2.5em;
 
   .post-title {
@@ -34,8 +42,17 @@
 
 .post-subtitle {
   color: _palette(secondary);
-  font-size: 1.33333rem;
+  font-size: 0.9rem;
   line-height: 1.5;
+
+  &:after {
+    margin-top: 0.83333rem;
+    border-left: 30px solid #d8195e;
+    display: block;
+    content: "";
+    height: 5px;
+    margin-bottom: 0.83333rem;
+  }
 }
 
 .post-thumbnail {
@@ -53,7 +70,6 @@
 .portfolio-feed,
 .page-header {
   margin-bottom: 1.66667em;
-  padding-top: 3.33333em;
 
   &:last-child {
     margin-bottom: 0;
