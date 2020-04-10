@@ -9,17 +9,11 @@
         <ul class="social-links">
           <li v-for="(social, index) in socials" :key="index">
             <a
-              :href="link.url"
+              :href="social.url"
               target="_blank"
               rel="noopener"
             >
-              <span
-                :class="`fab ${link.icon}`"
-                aria-hidden="true"
-              />
-              <span class="screen-reader-text">
-                {{ link.title }}
-              </span>
+              <font-awesome :icon="['fab', social.icon]"/>
             </a>
           </li>
         </ul><!-- .social-links -->
@@ -30,11 +24,24 @@
 <script>
 export default {
   name: 'Footer',
-  props: {
-    socials: {
-      type: Array,
-      default: () => []
+  computed: {
+    socials() {
+      return this.$static.socials.edges.map(e => e.node)
     }
   }
 }
 </script>
+
+<static-query>
+query Social {
+  socials: allSocial {
+    edges {
+      node {
+        title
+        url
+        icon
+      }
+    }
+  }
+}
+</static-query>

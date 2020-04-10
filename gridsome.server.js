@@ -10,6 +10,7 @@ module.exports = function (api) {
     const posts = addCollection({ typeName: 'Post' })
     const projects = addCollection({ typeName: "Project" })
     const pages = addCollection({ typeName: 'StaticPage' })
+    const socials = addCollection({ typeName: 'Social' })
 
     const api = await Prismic.getApi(apiEndpoint, {
       accessToken: apiToken,
@@ -45,8 +46,6 @@ module.exports = function (api) {
         } else if (type === "post") {
           const { author } = data;
 
-          console.log(data)
-
           posts.addNode({
             path: `/blog/${slugs[0]}`,
             slug: slugs[0],
@@ -68,6 +67,12 @@ module.exports = function (api) {
             slug: slugs[0],
             title: DOM.RichText.asText(data.title),
             content: marked(DOM.RichText.asText(data.content))
+          });
+        } else if (type === "social") {
+          socials.addNode({
+            title: data.title[0].text,
+            url: data.url[0].text,
+            icon: data.icon[0].text
           });
         }
       }
