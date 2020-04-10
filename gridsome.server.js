@@ -1,6 +1,7 @@
 const Prismic = require("prismic-javascript");
 const DOM = require("prismic-dom");
 const marked = require('marked')
+const moment = require('moment')
 
 const apiEndpoint = "https://meetandrearocca.cdn.prismic.io/api/v2";
 const apiToken = process.env.PRISMIC_TOKEN;
@@ -37,6 +38,7 @@ module.exports = function (api) {
               name: DOM.RichText.asText(data.client_name),
               logo: data.client_logo.url,
             },
+            createdAt: first_publication_date,
             image: data.image.url,
             technologies: DOM.RichText.asText(
               data.project_technologies
@@ -55,11 +57,16 @@ module.exports = function (api) {
               avatar: author.data.avatar.url,
             },
             createdAt: first_publication_date,
-            updatedAt: last_publication_date,
+            createdAtFormatted: moment(first_publication_date).format(
+              "DD/MM/YYYY"
+            ),
+            updatedAt: moment(last_publication_date).format(
+              "DD/MM/YYYY"
+            ),
             image: data.image.url,
             title: DOM.RichText.asText(data.title),
             excerpt: DOM.RichText.asText(data.excerpt),
-            content: marked(DOM.RichText.asText(data.content))
+            content: marked(DOM.RichText.asText(data.content)),
           });
         } else if (type === "static_page") {
           pages.addNode({

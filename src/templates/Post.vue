@@ -9,7 +9,7 @@
           <header class="post-header inner-small">
             <h1 class="post-title line-top">{{ post.title }}</h1>
             <div class="post-meta">
-              <time class="published" :datetime="post.createdAt">
+              <time class="published" :datetime="post.createdAtFormatted">
                 {{ post.createdAt }}
               </time>
             </div><!-- .post-meta -->
@@ -45,7 +45,7 @@ export default {
         name
         avatar
       }
-      createdAt
+      createdAtFormatted
       updatedAt
       image
       title

@@ -240,11 +240,11 @@ input[type="submit"],
 input[type="button"],
 input[type="reset"],
 a.button {
-  background: transparent;
+  background: _palette(accent);
   border: 3px solid _palette(accent);
   border-radius: 0;
   box-sizing: border-box;
-  color: _palette(accent);
+  color: white;
   display: inline-block;
   font-size: 16px;
   font-weight: bold;
@@ -252,10 +252,30 @@ a.button {
   line-height: 1.5;
   padding: 0.25em 40px;
 
+  &.small {
+    padding-left: 10px;
+    padding-right: 10px;
+    font-size: 14px;
+  }
+
+  &.inverted {
+    background: transparent;
+    color: _palette(accent);
+
+    &:hover,
+    &:focus,
+    &:active {
+      color: white;
+      background: _palette(accent);
+      outline: 0;
+    }
+  }
+
   &:hover,
   &:focus,
   &:active {
     color: _palette(accent);
+    background: transparent;
     outline: 0;
   }
 }
@@ -291,15 +311,6 @@ a.button {
   &:after {
     border-top: 0;
     bottom: 0;
-  }
-
-  &:hover,
-  &:focus,
-  &:active {
-    &:before,
-    &:after {
-      height: 50%;
-    }
   }
 }
 

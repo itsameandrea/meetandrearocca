@@ -16,7 +16,7 @@
         </div><!-- .site-branding -->
         <nav id="main-navigation" class="site-navigation" aria-label="Main Navigation">
           <div class="site-nav-inside">
-            <button @click="onToggleMobileMenu" id="menu-close" class="menu-toggle">
+            <button @click="onToggleMobileMenu" id="menu-close" class="menu-toggle bg-transparent">
               <span class="screen-reader-text">Open Menu</span>
               <span class="icon-close" aria-hidden="true"></span>
             </button>
@@ -28,10 +28,16 @@
                 :class="{ 'current-menu-item': link.url === $route.path  }">
                 <g-link :to="link.url">{{ link.label }}</g-link>
               </li>
+              <a
+                class="button inverted small ml-0 lg:ml-3"
+                href="mailto:hello@meetandrearocca.com"
+              >
+                Contact me
+              </a>
             </ul><!-- .menu -->
           </div>
         </nav><!-- .site-navigation -->
-        <button id="menu-open" class="menu-toggle" @click="onToggleMobileMenu">
+        <button id="menu-open" class="menu-toggle bg-transparent" @click="onToggleMobileMenu">
           <span class="screen-reader-text">
             Close Menu
           </span>

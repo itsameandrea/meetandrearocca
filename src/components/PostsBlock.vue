@@ -30,7 +30,7 @@
                 </h3>
                 <div class="post-meta">
                   <time class="published" datetime="post.createdAt">
-                    {{ post.createdAt }}
+                    {{ post.createdAtFormatted }}
                   </time>
                 </div>
               </header>

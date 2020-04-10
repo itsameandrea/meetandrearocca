@@ -61,7 +61,7 @@ export default {
 </script>
 <page-query>
   query Project {
-    projects: allProject(sortBy: "createdAt", order: ASC limit: 4) {
+    projects: allProject(sortBy: "createdAt", order: DESC limit: 4) {
       edges {
         node {
           technologies
@@ -76,7 +76,7 @@ export default {
         }
       }
     }
-    posts: allPost(sortBy: "createdAt", order: ASC limit: 4) {
+    posts: allPost(sortBy: "createdAt", order: DESC limit: 4) {
       edges {
         node {
           path
@@ -85,7 +85,7 @@ export default {
             name
             avatar
           }
-          createdAt
+          createdAtFormatted
           updatedAt
           image
           title

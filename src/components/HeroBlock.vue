@@ -8,6 +8,11 @@
         <div class="block-copy">
           {{ subtitle }}
         </div>
+        <div class="block-cta">
+          <a class="button mt-3" href="mailto:hello@meetandrearocca.com" target="_blank">
+            Get in touch
+          </a>
+        </div>
       </div><!-- .block-content -->
     </div><!-- .inner -->
   </section><!-- .block -->

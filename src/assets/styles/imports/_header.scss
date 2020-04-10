@@ -73,10 +73,9 @@
 }
 
 #main-navigation {
-  a {
+  .menu-item a {
     border: 0;
     color: inherit;
-
     &:hover,
     &:focus {
       color: _palette(accent);

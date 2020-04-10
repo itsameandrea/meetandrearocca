@@ -3,8 +3,7 @@
     <div class="inner">
       <div class="site-footer-inside">
         <p class="site-info">
-          @ilrock
-          &nbsp;
+          © {{ new Date().getFullYear() }} @ilrock
         </p><!-- .site-info -->
         <ul class="social-links">
           <li v-for="(social, index) in socials" :key="index">
