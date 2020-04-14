@@ -32,6 +32,18 @@ export default {
     post() {
       return this.$page.post
     }
+  },
+  mounted() {
+    const pres = document.querySelectorAll('pre')
+
+    pres.forEach(pre => {
+      const code = pre.querySelector('code')
+
+      if (code) {
+        const lang = code.classList[0]
+        pre.classList.add(lang)
+      }
+    })
   }
 }
 </script>
