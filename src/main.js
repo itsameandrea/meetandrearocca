@@ -3,12 +3,6 @@ import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 import { config, library } from "@fortawesome/fontawesome-svg-core"
 import { faGithub, faTwitter, faLinkedin } from "@fortawesome/free-brands-svg-icons"
 
-import "prismjs"
-import "dracula-prism/js/prism"
-import "dracula-prism/css/dracula-prism.css"
-import "prismjs/components/prism-scss.min";
-import "prismjs/plugins/autolinker/prism-autolinker.min";
-import "prismjs/plugins/autolinker/prism-autolinker.css";
 import "@fortawesome/fontawesome-svg-core/styles.css";
 import "@/assets/styles/main.scss"
 

@@ -26,6 +26,20 @@
 </template>
 
 <script>
+import Prism from 'prismjs'
+
+import "prismjs/components/prism-scss"
+import "prismjs/components/prism-markup"
+import "prismjs/components/prism-ruby"
+import "prismjs/plugins/toolbar/prism-toolbar"
+import "prismjs/plugins/autolinker/prism-autolinker";
+import "prismjs/plugins/line-numbers/prism-line-numbers";
+import "prismjs/plugins/line-highlight/prism-line-highlight";
+import "prismjs/plugins/copy-to-clipboard/prism-copy-to-clipboard";
+import "prismjs/plugins/highlight-keywords/prism-highlight-keywords";
+// import "prismjs/plugins/show-language/prism-show-language";
+import "prismjs/plugins/normalize-whitespace/prism-normalize-whitespace";
+
 export default {
   name: 'ProjectTemplate',
   computed: {
@@ -41,12 +55,25 @@ export default {
 
       if (code) {
         const lang = code.classList[0]
-        pre.classList.add(lang)
+        pre.classList.add(lang, 'line-numbers')
       }
+
+      const parent = document.createElement('div')
+      parent.classList.add('prism')
+
+      pre.parentNode.insertBefore(parent, pre)
+
+      parent.appendChild(pre)
     })
+
+    Prism.highlightAll()
   }
 }
 </script>
+
+<style lang="scss">
+  @import "@/assets/styles/prism.scss"
+</style>
 
 <page-query>
   query Post ($path: String!) {
