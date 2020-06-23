@@ -9,19 +9,21 @@
       </div><!-- .block-header -->
       <div class="block-content">
         <div class="portfolio-feed layout-mosaic">
-          <article v-for="(project, index) in projects" :key="index" class="post project">
-            <g-link
-              :to="project.path"
-              class="post-link"
-            >
-              <div class="post-thumbnail">
-                <img class="thumbnail" :src="project.image" :alt="project.name" />
-              </div>
-              <header class="post-header">
-                <h3 class="post-title">{{ project.client.name }}</h3>
-              </header>
-            </g-link><!-- .post-link -->
-          </article><!-- .post -->
+          <g-link
+            v-for="(project, index) in projects"
+            :key="index"
+            :to="project.path"
+            class="post-link"
+          >
+            <article class="post project">
+                <div class="post-thumbnail">
+                  <img class="thumbnail" :src="project.image" :alt="project.name" />
+                </div>
+                <header class="post-header">
+                  <h3 class="post-title">{{ project.client.name }}</h3>
+                </header>
+            </article><!-- .post -->
+          </g-link><!-- .post-link -->
         </div><!-- .portfolio-feed -->
       </div><!-- .block-content -->
     </div><!-- .inner -->

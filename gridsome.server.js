@@ -1,37 +1,88 @@
+
+
+
+
+
+
+
+
+
+
+
 const Prismic = require("prismic-javascript");
 const DOM = require("prismic-dom");
+
+const GhostContentAPI = require('@tryghost/content-api')
+
 const marked = require('marked')
 const moment = require('moment')
 
-const apiEndpoint = "https://meetandrearocca.cdn.prismic.io/api/v2";
-const apiToken = process.env.PRISMIC_TOKEN;
+const prismicConfig = {
+  apiEndpoint: 'https://meetandrearocca.cdn.prismic.io/api/v2',
+  apiToken: process.env.PRISMIC_TOKEN
+}
+
+const ghostConfig = {
+  baseUrl: 'https://ghost.meetandrearocca.com',
+  apiKey: process.env.GHOST_API_TOKEN
+}
 
 module.exports = function (api) {
   api.loadSource(async ({ addCollection }) => {
-    const posts = addCollection({ typeName: 'Post' })
-    const projects = addCollection({ typeName: "Project" })
-    const pages = addCollection({ typeName: 'StaticPage' })
-    const socials = addCollection({ typeName: 'Social' })
+    const postsCollection = addCollection({ typeName: 'Post' })
+    const projectsCollection = addCollection({ typeName: "Project" })
+    const pagesCollection = addCollection({ typeName: 'StaticPage' })
+    const socialsCollection = addCollection({ typeName: 'Social' })
 
-    const api = await Prismic.getApi(apiEndpoint, {
-      accessToken: apiToken,
+    // Posts coming from Ghost
+    const contentApi = new GhostContentAPI({
+      url: ghostConfig.baseUrl,
+      key: ghostConfig.apiKey,
+      version: 'v3'
+    })
+    
+    const posts = await contentApi.posts
+      .browse({ include: 'tags,authors' })
+
+    posts.forEach(post => {
+      postsCollection.addNode({
+        path: `/blog/${post.slug}`,
+        slug: post.slug,
+        tags: post.tags,
+        author: {
+          name: post.authors[0].name,
+          avatar: post.authors[0].profile_image,
+        },
+        createdAt: post.published_at,
+        createdAtFormatted: moment(post.published_at).format(
+          "DD/MM/YYYY"
+        ),
+        updatedAt: moment(post.updated_at).format(
+          "DD/MM/YYYY"
+        ),
+        image: post.feature_image,
+        title: post.title,
+        excerpt: post.excerpt,
+        content: post.html,
+      })
+    })
+
+    // Projects, static pages and socials from Prismic
+    const prismic = await Prismic.getApi(prismicConfig.apiEndpoint, {
+      accessToken: prismicConfig.apiToken,
     });
 
-    const { results } = await api.query("", {
-      fetchLinks: ["author.name", "author.avatar"],
-    });
+    const { results } = await prismic.query("");
 
     results.forEach(
       ({
         type,
         data,
         slugs,
-        tags,
         first_publication_date,
-        last_publication_date,
       }) => {
         if (type === "project") {
-          projects.addNode({
+          projectsCollection.addNode({
             path: `/projects/${slugs[0]}`,
             slug: slugs[0],
             client: {
@@ -45,38 +96,15 @@ module.exports = function (api) {
             ).split(","),
             description: marked(DOM.RichText.asText(data.project_description)),
           });
-        } else if (type === "post") {
-          const { author } = data;
-
-          posts.addNode({
-            path: `/blog/${slugs[0]}`,
-            slug: slugs[0],
-            tags,
-            author: {
-              name: author.data.name[0].text,
-              avatar: author.data.avatar.url,
-            },
-            createdAt: first_publication_date,
-            createdAtFormatted: moment(first_publication_date).format(
-              "DD/MM/YYYY"
-            ),
-            updatedAt: moment(last_publication_date).format(
-              "DD/MM/YYYY"
-            ),
-            image: data.image.url,
-            title: DOM.RichText.asText(data.title),
-            excerpt: DOM.RichText.asText(data.excerpt),
-            content: marked(DOM.RichText.asText(data.content)),
-          });
         } else if (type === "static_page") {
-          pages.addNode({
+          pagesCollection.addNode({
             path: `/${slugs[0]}`,
             slug: slugs[0],
             title: DOM.RichText.asText(data.title),
             content: marked(DOM.RichText.asText(data.content))
           });
         } else if (type === "social") {
-          socials.addNode({
+          socialsCollection.addNode({
             title: data.title[0].text,
             url: data.url[0].text,
             icon: data.icon[0].text
