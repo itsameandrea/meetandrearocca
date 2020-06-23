@@ -29,18 +29,18 @@ export default {
     }
   }
 }
-// <static-query>
-// query Social {
-//   socials: allSocial {
-//     edges {
-//       node {
-//         title
-//         url
-//         icon
-//       }
-//     }
-//   }
-// }
-// </static-query>
 </script>
 
+<static-query>
+query Social {
+  socials: allSocial {
+    edges {
+      node {
+        title
+        url
+        icon
+      }
+    }
+  }
+}
+</static-query>
