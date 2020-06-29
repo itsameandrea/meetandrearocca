@@ -71,10 +71,6 @@ export default {
 }
 </script>
 
-<style lang="scss">
-  @import "@/assets/styles/prism.scss"
-</style>
-
 <page-query>
   query Post ($path: String!) {
     post: post (path: $path) {
@@ -93,3 +89,14 @@ export default {
     }
   }
 </page-query>
+
+
+<style lang="scss">
+  @import "@/assets/styles/prism.scss";
+
+  .post-content {
+    ul {
+      list-style: disc;
+    }
+  }
+</style>
