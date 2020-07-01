@@ -20,6 +20,7 @@
           <div class="post-content inner-small" v-html="post.content">
           </div><!-- .post-content -->
         </article><!-- .post -->
+        <div id="comments_thread"></div>
       </div><!-- .inner -->
     </div><!-- .outer-->
   </Layout>
@@ -39,6 +40,8 @@ import "prismjs/plugins/copy-to-clipboard/prism-copy-to-clipboard";
 import "prismjs/plugins/highlight-keywords/prism-highlight-keywords";
 // import "prismjs/plugins/show-language/prism-show-language";
 import "prismjs/plugins/normalize-whitespace/prism-normalize-whitespace";
+
+import initComments from 'commentappjs'
 
 export default {
   name: 'ProjectTemplate',
@@ -65,6 +68,17 @@ export default {
 
       parent.appendChild(pre)
     })
+
+    const config = {
+      accountId: 'hFGWpda1SxNFcZ2paOFz',
+      threadId: this.post.slug, //used to uniquely identify a thread. In a blog, this could be the post slug
+      user: {
+        name: '',
+        avatar: ''
+      }
+    }
+
+    initComments(config)
 
     Prism.highlightAll()
   }
