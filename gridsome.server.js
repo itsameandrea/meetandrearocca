@@ -91,6 +91,7 @@ module.exports = function (api) {
             },
             createdAt: first_publication_date,
             image: data.image.url,
+            url: DOM.RichText.asText(data.url),
             technologies: DOM.RichText.asText(
               data.project_technologies
             ).split(","),
