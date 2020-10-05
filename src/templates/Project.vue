@@ -46,7 +46,6 @@ export default {
   methods: {
     getTechnologyBackground(tech) {
       const formattedTech = tech.toLowerCase().trim().replace(/ /g, '-')
-      console.log(formattedTech)
       return TECHNOLOGIES_BACKGROUNDS[formattedTech]
     }
   }
@@ -65,6 +64,7 @@ export default {
     project: project (path: $path) {
       technologies
       image
+      url
       path
       slug
       description
