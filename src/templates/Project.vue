@@ -6,13 +6,18 @@
           <header class="post-header">
             <h1 class="post-title line-top">{{ project.client.name }}</h1>
             <div class="project-technologies">
-              <span
-                v-for="(tech, index) in project.technologies"
-                :key="index"
-                :class="`py-1 px-2 mr-1 text-xs ${getTechnologyBackground(tech)}`"
-              >
-                {{ tech.toLowerCase() }}
-              </span>
+              <div>
+                <span
+                  v-for="(tech, index) in project.technologies"
+                  :key="index"
+                  :class="`py-1 px-2 mr-1 text-xs ${getTechnologyBackground(tech)}`"
+                >
+                  {{ tech.toLowerCase() }}
+                </span>
+              </div>
+              <div>
+                <a :href="project.url" target="_blank">Have a look</a>
+              </div>
             </div>
           </header><!-- .post-header -->
           <div class="flex flex-col lg:flex-row">
@@ -47,6 +52,13 @@ export default {
   }
 }
 </script>
+
+<style lang="scss" scoped>
+  .project-technologies {
+    display: flex;
+    justify-content: space-between;
+  }
+</style>
 
 <page-query>
   query Project ($path: String!) {
