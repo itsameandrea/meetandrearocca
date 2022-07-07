@@ -21,7 +21,7 @@
     "dracula-prism": "^1.2.1",
     "gridsome": "^0.7.0",
     "marked": "^0.8.2",
-    "moment": "^2.24.0",
+    "moment": "^2.29.4",
     "prismic-dom": "^2.1.0",
     "prismic-javascript": "^2.7.0",
     "prismjs": "^1.20.0",
